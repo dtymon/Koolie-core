@@ -1,6 +1,6 @@
 {
   "name": "@koolie/core",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Koolie - Core functionality required by Koolie packages and apps",
   "license": "MIT",
   "author": "David Tymon",
