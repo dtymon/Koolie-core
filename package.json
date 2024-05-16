@@ -1,14 +1,14 @@
 {
-  "name": "@koolie/<my-package>",
-  "version": "0.0.0",
-  "description": "Koolie - Package description",
+  "name": "@koolie/core",
+  "version": "0.1.0",
+  "description": "Koolie - Core functionality required by Koolie packages and apps",
   "license": "MIT",
   "author": "David Tymon",
   "type": "module",
-  "koolie-module": "<my-package>",
+  "koolie-module": "core",
   "repository": {
     "type": "git",
-    "url": "https://github.com/dtymon/koolie-<my-package>"
+    "url": "https://github.com/dtymon/koolie-core"
   },
   "publishConfig": {
     "access": "public"
