@@ -1,6 +1,6 @@
 {
   "name": "@koolie/core",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Koolie - Core functionality required by Koolie packages and apps",
   "license": "MIT",
   "author": "David Tymon",
@@ -76,7 +76,7 @@
     "./types/*": "./dist/types/*.js"
   },
   "devDependencies": {
-    "@koolie/tooling": "0.2.0"
+    "@koolie/tooling": "~0.2.0"
   },
   "dependencies": {
     "@types/content-type": "1.1.8",
