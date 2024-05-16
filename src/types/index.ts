@@ -1,4 +1,4 @@
-export * from './ConcurrecyGate.js';
+export * from './ConcurrencyGate.js';
 export * from './DoublyLinkedList.js';
 export * from './LinkedList.js';
 export * from './UuidFactory.js';
