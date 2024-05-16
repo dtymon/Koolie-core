@@ -623,7 +623,7 @@
     "@jridgewell/resolve-uri" "^3.1.0"
     "@jridgewell/sourcemap-codec" "^1.4.14"
 
-"@koolie/tooling@0.2.0":
+"@koolie/tooling@~0.2.0":
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/@koolie/tooling/-/tooling-0.2.0.tgz#6d0c6487f954bda3decf07dcc307ac9160ff0281"
   integrity sha512-NCJnEXhjtwAdGyh/crvS7//4w7l3Uydlf9+ABNGumINUoOgFifAonIZ1Kofr+wbi3YFQHz2JNi8D75YABaEo7g==
