@@ -71,8 +71,16 @@
     "./3rd-party/yargs": "./dist/yargs/index.js",
     "./3rd-party/zod": "./dist/zod/index.js",
     "./package.json": "./package.json",
+    "./errors": "./dist/errors/index.js",
+    "./errors/*": "./dist/errors/*.js",
+    "./process": "./dist/process/index.js",
+    "./process/*": "./dist/process/*.js",
+    "./time": "./dist/time/index.js",
+    "./time/*": "./dist/time/*.js",
     "./types": "./dist/types/index.js",
-    "./types/*": "./dist/types/*.js"
+    "./types/*": "./dist/types/*.js",
+    "./utils": "./dist/utils/index.js",
+    "./utils/*": "./dist/utils/*.js"
   },
   "devDependencies": {
     "@koolie/tooling": "~0.4.0"

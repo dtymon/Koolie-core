@@ -34,7 +34,7 @@ export interface WriteVisitResult extends ReadVisitResult {
  */
 export abstract class WriteVisitor {
   /**
-   * Called when a visitation of a node starts
+   * Begin visit of the given node
    *
    * @param node - node that is being visited
    * @param name - name of the node
@@ -44,7 +44,7 @@ export abstract class WriteVisitor {
   public abstract enter(node: any, name: string, path: string): WriteVisitResult | void;
 
   /**
-   * Called when a visitation of a node ends
+   * End visit of the given node
    *
    * @param _node - node whose visitation has completed
    * @param _name - name of the node
