@@ -34,11 +34,11 @@ import type { Constructor } from '../types/Constructor.js';
  * collision with another entry in the `global` namespace.
  */
 export class ProcessSingletonFactory {
-  /** The namespace used for singletons created by the factory **/
-  private static readonly NAMESPACE = '/koolie/singletons';
+  /** Namespace used for singletons created by the factory **/
+  private static readonly NAMESPACE = '/__koolie__/singletons';
 
   /**
-   * Get the singleton with the given name, creating it if required.
+   * Get or create the singleton with the given name
    *
    * @typeParam T - the type of the singleton
    * @param name - unique name assigned to the singleton
@@ -46,15 +46,13 @@ export class ProcessSingletonFactory {
    * @returns the singleton instance
    */
   public static get<T extends object>(name: string, ctor: Constructor<T>): T {
-    // Get or create the factory namespace
-    const ns = Symbol.for(this.NAMESPACE);
-    let singletons: Map<string, any> | undefined = (global as any)[ns];
+    const key = Symbol.for(this.NAMESPACE);
+    let singletons: Map<string, any> | undefined = (global as any)[key];
     if (singletons === undefined) {
       singletons = new Map();
-      (global as any)[ns] = singletons;
+      (global as any)[key] = singletons;
     }
 
-    // Get or create the singleton instance
     let singleton: T | undefined = singletons.get(name);
     if (singleton === undefined) {
       singleton = new ctor();
