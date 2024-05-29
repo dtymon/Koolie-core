@@ -57,14 +57,16 @@ export class WorkQueue<T> {
   /**
    * Called by a producer to add another job to the end of the queue.
    *
-   * @param job - the job to be added
+   * @param jobs - the job(s) to be added
    */
-  public produce(job: T) {
-    // Add to the end of the queue. If the consumer is waiting, then wake them
-    // up to work on this latest job. Producers are allowed to add more jobs
-    // even during shutdown because, presumably, those new jobs will cease at
-    // some point as its producer(s) terminate.
-    this.jobs.push(job);
+  public produce(jobs: T | T[]) {
+    if (this.closed) {
+      throw new Error(`Cannot add jobs to an empty work queue`);
+    }
+
+    // Add the job(s) to the end of the queue. If the consumer is waiting, then
+    // wake them up to work on these latest jobs.
+    (Array.isArray(jobs) ? jobs : [jobs]).forEach((job) => this.jobs.push(job));
     this.wakeConsumer();
   }
 

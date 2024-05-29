@@ -108,6 +108,39 @@ describe('WorkQueue Test', function () {
     }
   });
 
+  it('should be able to produce many jobs at once', async function () {
+    const queue = new WorkQueue<Job>();
+
+    // Add some jobs to the queue before closing it
+    const jobs: Job[] = [];
+    for (let counter = 0; counter < 10; ++counter) {
+      jobs.push({ counter });
+    }
+    queue.produce(jobs);
+    queue.close();
+
+    // Consume all jobs until we are told it has closed
+    const received: Job[] = [];
+    let completed = false;
+    while (!completed) {
+      const job = await queue.consume();
+      if (job === undefined) {
+        completed = true;
+      } else {
+        received.push(job);
+      }
+    }
+
+    expect(queue.length()).toEqual(0);
+    expect(queue.isEmpty()).toBeTruthy();
+    expect(queue.isClosed()).toBeTruthy();
+    expect(received.length).toEqual(10);
+
+    for (let idx = 0; idx < jobs.length; ++idx) {
+      expect(received[idx].counter).toEqual(idx);
+    }
+  });
+
   it('should handle jobs getting added while waiting', async function () {
     const queue = new WorkQueue<Job>();
 
@@ -139,5 +172,21 @@ describe('WorkQueue Test', function () {
     for (let idx = 0; idx < jobs.length; ++idx) {
       expect(jobs[idx].counter).toEqual(idx);
     }
+  });
+
+  it('should throw when producing to a closed queue', async function () {
+    const queue = new WorkQueue<Job>();
+    queue.produce({ counter: 1 });
+
+    const received = await queue.consume();
+    expect(received).toBeDefined();
+    expect(queue.isEmpty()).toBeTruthy();
+    expect(queue.isClosed()).toBeFalsy();
+
+    // Close the queue and try to add a new job
+    queue.close();
+    expect(() => queue.produce({ counter: 2 })).toThrow(Error);
+    expect(queue.isEmpty()).toBeTruthy();
+    expect(queue.isClosed()).toBeTruthy();
   });
 });
