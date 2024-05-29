@@ -7,8 +7,8 @@ import { LinkedList } from './LinkedList.js';
 export class ConcurrencyGate<ResultType, Job extends (...args: any) => Promise<ResultType>> {
   /**
    * The list of jobs waiting to go through the gate in FIFO order. These are
-   * the resolve() functions of promises for each job is waiting to be resolved
-   * before they can enter.
+   * the resolve() functions of promises for each job that is waiting to be
+   * resolved before they can enter.
    */
   private queue: LinkedList<() => void> = new LinkedList();
 
