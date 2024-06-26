@@ -43,7 +43,7 @@ export function CausedBy<T extends Constructor<KoolieError>>(ErrorType: T) {
      *
      * @param cause - error that caused this error
      */
-    public captureCause(cause: Error) {
+    public captureCause(cause: Error): void {
       // ES2022 now provides a `cause` field for this very situation
       this.cause = cause;
 
@@ -58,9 +58,12 @@ export function CausedBy<T extends Constructor<KoolieError>>(ErrorType: T) {
      * @returns the full stack trace down to the root case
      */
     public getFullStack(): string {
+      // prettier-ignore
       try {
         return util.inspect(this, { depth: null });
-      } catch (_err: any) {
+      }
+      /* v8 ignore next 3 */
+      catch (_err: any) {
         return this.toString();
       }
     }

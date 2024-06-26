@@ -21,5 +21,5 @@ export {
   CanceledError,
   HttpStatusCode,
   isAxiosError,
-  isCancel
+  isCancel,
 } from 'axios';

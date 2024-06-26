@@ -1,7 +1,7 @@
 import { StatusCodes, getReasonPhrase } from '../3rd-party/http-status-codes/index.js';
 import { AxiosError, isAxiosError } from '../3rd-party/axios/index.js';
 
-import { KoolieError, CausedBy } from './KoolieError.js';
+import { CausedBy, KoolieError } from './KoolieError.js';
 import type { ErrorContext } from './KoolieError.js';
 
 /** Base class of all HTTP errors */
@@ -672,7 +672,7 @@ export class HttpErrorFactory {
     const axiosError: AxiosError = err;
     if (!axiosError.request) {
       return new HttpErrorSendRequestFailed(message, {
-        context: {
+        details: {
           method: axiosError.config?.method,
           url: axiosError.config?.url,
         },
@@ -684,7 +684,7 @@ export class HttpErrorFactory {
     // response was received.
     if (!axiosError.response || axiosError.response.status === undefined) {
       return new HttpErrorReceiveResponseFailed(message, {
-        context: {
+        details: {
           method: axiosError.config?.method,
           url: axiosError.config?.url,
         },
@@ -724,6 +724,9 @@ export class HttpErrorFactory {
 
       case StatusCodes.NOT_ACCEPTABLE:
         return new HttpErrorNotAcceptable(message, context);
+
+      case StatusCodes.PROXY_AUTHENTICATION_REQUIRED:
+        return new HttpErrorProxyAuthenticationError(message, context);
 
       case StatusCodes.REQUEST_TIMEOUT:
         return new HttpErrorRequestTimeout(message, context);

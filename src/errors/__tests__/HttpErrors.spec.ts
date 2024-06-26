@@ -19,6 +19,8 @@ import {
   HttpErrorMethodNotAllowedCausedBy,
   HttpErrorNotAcceptable,
   HttpErrorNotAcceptableCausedBy,
+  HttpErrorProxyAuthenticationError,
+  HttpErrorProxyAuthenticationErrorCausedBy,
   HttpErrorRequestTimeout,
   HttpErrorRequestTimeoutCausedBy,
   HttpErrorConflict,
@@ -298,6 +300,20 @@ describe('HttpErrors Test', function () {
     });
   });
 
+  describe('ProxyAuthentication Test', function () {
+    it('can construct an instance', function () {
+      testResponseErrorType(HttpErrorProxyAuthenticationError, StatusCodes.PROXY_AUTHENTICATION_REQUIRED);
+    });
+
+    it('can be constructed via factory', function () {
+      testResponseErrorViaFactory(HttpErrorProxyAuthenticationError, StatusCodes.PROXY_AUTHENTICATION_REQUIRED);
+    });
+
+    it('can construct a caused-by instance', function () {
+      testResponseCausedBy(HttpErrorProxyAuthenticationErrorCausedBy, StatusCodes.PROXY_AUTHENTICATION_REQUIRED);
+    });
+  });
+
   describe('RequestTimeout Test', function () {
     it('can construct an instance', function () {
       testResponseErrorType(HttpErrorRequestTimeout, StatusCodes.REQUEST_TIMEOUT);
@@ -525,11 +541,38 @@ describe('HttpErrors Test', function () {
       expect(err.message).toEqual(message);
     });
 
+    it('can handle an Axios error with no request but config', function () {
+      const axiosErr: Partial<AxiosError> = {
+        isAxiosError: true,
+        message,
+        config: { method: 'GET', url: 'http://some.where.com', headers: {} as any },
+      };
+      const err = HttpErrorFactory.fromAxios(axiosErr);
+      expect(err).toBeInstanceOf(HttpErrorSendRequestFailed);
+      expect(err.message).toEqual(message);
+      expect(err.context.details.method).toEqual('GET');
+      expect(err.context.details.url).toEqual('http://some.where.com');
+    });
+
     it('can handle an Axios error with no response', function () {
       const axiosErr: Partial<AxiosError> = { isAxiosError: true, message, request: {} };
       const err = HttpErrorFactory.fromAxios(axiosErr);
       expect(err).toBeInstanceOf(HttpErrorReceiveResponseFailed);
       expect(err.message).toEqual(message);
+    });
+
+    it('can handle an Axios error with no response but config', function () {
+      const axiosErr: Partial<AxiosError> = {
+        isAxiosError: true,
+        message,
+        request: {},
+        config: { method: 'GET', url: 'http://some.where.com', headers: {} as any },
+      };
+      const err = HttpErrorFactory.fromAxios(axiosErr);
+      expect(err).toBeInstanceOf(HttpErrorReceiveResponseFailed);
+      expect(err.message).toEqual(message);
+      expect(err.context.details.method).toEqual('GET');
+      expect(err.context.details.url).toEqual('http://some.where.com');
     });
 
     it('can handle an erroneous status', function () {
