@@ -79,6 +79,7 @@ describe('Semaphore tests', function () {
   it('allows initial value to be specified', async function () {
     const sem = new Semaphore(123);
     expect(sem.getValue()).toEqual(123);
+    expect(sem.getNumWaiters()).toEqual(0);
   });
 
   it('will not block when there is sufficient capacity', async function () {
