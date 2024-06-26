@@ -55,7 +55,7 @@ export class PromiseSettler<ReturnType> {
    *
    * @param result - the result of the promise
    */
-  public resolve(result: ReturnType | PromiseLike<ReturnType>) {
+  public resolve(result: ReturnType | PromiseLike<ReturnType>): void {
     if (!this.hasBeenSettled()) {
       this.resolved = true;
       this.resolver(result);
@@ -67,7 +67,7 @@ export class PromiseSettler<ReturnType> {
    *
    * @param err - the error to report
    */
-  public reject(err?: Error) {
+  public reject(err?: Error): void {
     if (!this.hasBeenSettled()) {
       this.rejected = true;
       this.rejecter(err);

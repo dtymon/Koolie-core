@@ -1,4 +1,4 @@
-import { PromiseSettler } from '../utils/PromiseSettler.js';
+import { PromiseSettler } from './PromiseSettler.js';
 import { LinkedList } from './LinkedList.js';
 
 /** A producer/consumer work queue */
