@@ -44,7 +44,7 @@ export abstract class ReadVisitor {
    * @param _name - name of the node
    * @param _path - full dotted path to the node
    */
-  public exit(_node: any, _name: string, _path: string) {
+  public exit(_node: any, _name: string, _path: string): void {
     // No-op by default
   }
 }
@@ -63,7 +63,7 @@ export class ReadWalker {
    * @param value - value to walk
    * @param visitor - visitor interested in the walking
    */
-  public static walk(value: any, visitor: ReadVisitor) {
+  public static walk(value: any, visitor: ReadVisitor): void {
     const walker = new ReadWalker(value, visitor);
     walker.start();
   }
@@ -80,7 +80,7 @@ export class ReadWalker {
   ) {}
 
   /** Starts the walking process */
-  private start() {
+  private start(): void {
     this.walkNode(this.node, '', '');
   }
 

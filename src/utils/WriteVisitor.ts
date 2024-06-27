@@ -50,7 +50,7 @@ export abstract class WriteVisitor {
    * @param _name - name of the node
    * @param _path - full dotted path to the node
    */
-  public exit(_node: any, _name: string, _path: string) {
+  public exit(_node: any, _name: string, _path: string): void {
     // No-op by default
   }
 }

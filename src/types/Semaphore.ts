@@ -1,5 +1,5 @@
-import { PromiseSettler } from './PromiseSettler.js';
 import { LinkedList } from './LinkedList.js';
+import { PromiseSettler } from './PromiseTypes.js';
 
 /**
  * A consumer that is waiting for the semaphore's value to reach the capacity

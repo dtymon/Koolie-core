@@ -6,7 +6,7 @@ export {
   foregroundColorNames,
   modifierNames,
   supportsColor,
-  supportsColorStderr
+  supportsColorStderr,
 } from 'chalk';
 
 export type {
@@ -17,5 +17,5 @@ export type {
   ColorSupportLevel,
   BackgroundColorName,
   ForegroundColorName,
-  ModifierName
+  ModifierName,
 } from 'chalk';
